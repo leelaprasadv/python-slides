@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Python - Professional Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #059669;
+            --accent-color: #dc2626;
+            --text-dark: #1f2937;
+            --text-medium: #374151;
+            --text-light: #6b7280;
+            --text-lighter: #9ca3af;
+            --bg-light: #f8fafc;
+            --bg-subtle: #f1f5f9;
+            --border-light: #e2e8f0;
+            --border-subtle: #cbd5e1;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --gradient-secondary: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+
+        .reveal {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 22px;
+            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 28px 40px;
+            box-sizing: border-box;
+        }
+
+        .reveal h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 0.5em;
+            letter-spacing: -0.025em;
+        }
+
+        .reveal h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75em;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .reveal h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.6em;
+            letter-spacing: -0.01em;
+        }
+
+        .reveal h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 0.5em;
+        }
+
+        .reveal p, .reveal li {
+            font-size: 0.85rem;
+            line-height: 1.65;
+            margin-bottom: 0.6em;
+            color: var(--text-medium);
+        }
+
+        .reveal ul, .reveal ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.4em;
+        }
+
+        .reveal strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .reveal code {
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, Menlo, monospace;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            padding: 0.2em 0.5em;
+            border-radius: 6px;
+            font-size: 0.85em;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .reveal pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1.25em;
+            margin: 1.25em 0;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .reveal pre code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.75rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* Two column layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5em;
+            align-items: start;
+        }
+
+        /* Content boxes with improved styling */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 0.50em;        
+            margin: 0.25em 0;       
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 0.25em;        
+            margin: 0.25em 0;       
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef7cd 100%);
+            border-left: 4px solid var(--warning-color);
+            padding: 0.25em;        
+            margin: 0.25em 0;       
+            border-radius: 8px;
+            font-style: italic;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .expert-note {
+            background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%);
+            border-left: 4px solid #8b5cf6;
+            padding: 0.25em;        
+            margin: 0.25em 0;       
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .beginner-note {
+            background: linear-gradient(135deg, #fff7ed 0%, #fffbf0 100%);
+            border-left: 4px solid #f97316;
+            padding: 0.25em;        
+            margin: 0.25em 0;       
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tables */
+        .reveal table {
+            font-size: 0.75rem;
+            margin: 1.5em auto;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .reveal th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.75em;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .reveal td {
+            padding: 0.75em;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-medium);
+        }
+
+        .reveal tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        /* Center content for title slides */
+        .center {
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* Ensure content fits */
+        .content-container {
+            max-width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* Level indicators */
+        .level-indicator {
+            display: inline-block;
+            padding: 0.25em 0.75em;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 0.5em;
+        }
+
+        .beginner {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .intermediate {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .expert {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .reveal {
+                font-size: 20px;
+            }
+            
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 1.5em;
+            }
+            
+            .reveal .slides section {
+                padding: 24px;
+            }
+
+            .reveal h1 {
+                font-size: 1.8rem;
+            }
+
+            .reveal h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Enhanced navigation */
+        .reveal .controls {
+            color: var(--primary-color);
+        }
+
+        .reveal .progress {
+            color: var(--primary-color);
+        }
+
+        /* Smooth transitions */
+        .reveal .slides section {
+            transition: all 0.3s ease;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 1em auto;
+            padding: 1em 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 1.5em 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 0.8em;
+            width: 40%;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px -3px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid #f1f5f9;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-right: 10px solid #f1f5f9;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-marker:hover {
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-year {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.3em;
+        }
+
+        .timeline-title {
+            font-size: 0.75em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.2em;
+        }
+
+        .timeline-description {
+            font-size: 0.65em;
+            color: var(--text-medium);
+            line-height: 1.4;
+        }
+
+        .timeline-highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 3px solid var(--warning-color);
+        }
+
+        .timeline-highlight .timeline-marker {
+            background: linear-gradient(135deg, var(--warning-color), #f59e0b);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 3px white, 0 0 0 6px rgba(245, 158, 11, 0.3); }
+            50% { box-shadow: 0 0 0 3px white, 0 0 0 8px rgba(245, 158, 11, 0.1); }
+            100% { box-shadow: 0 0 0 3px white, 0 0 0 6px rgba(245, 158, 11, 0.3); }
+        }
+
+        /* Responsive timeline */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 40px;
+            }
+            
+            .timeline-item .timeline-content::before {
+                left: -10px !important;
+                right: auto !important;
+                border-right: 10px solid #f1f5f9 !important;
+                border-left: none !important;
+            }
+            
+            .timeline-marker {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Title Slide -->
+            <section class="center">
+                <div style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #059669 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5em;">
+                    <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 0.2em;">🐍 Introduction to Python</h1>
+                </div>
+                <p style="font-size: 1.1em; color: var(--text-light); margin-bottom: 2em; font-style: italic; text-align: center; font-weight: 300;">From Zero to Pythonista</p>
+                
+                <!-- Key Statistics Row -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5em; margin: 2em 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 1.5em; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.2em; font-weight: 700; color: var(--primary-color); margin-bottom: 0.2em;">#1</div>
+                        <div style="font-size: 0.9em; color: var(--text-medium); font-weight: 500;">Most Popular<br>Programming Language</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%); padding: 1.5em; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.2em; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.2em;">30+</div>
+                        <div style="font-size: 0.9em; color: var(--text-medium); font-weight: 500;">Years of<br>Proven Success</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 1.5em; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.2em; font-weight: 700; color: var(--warning-color); margin-bottom: 0.2em;">650K+</div>
+                        <div style="font-size: 0.9em; color: var(--text-medium); font-weight: 500;">Libraries &<br>Packages</div>
+                    </div>
+                </div>
+
+                <!-- Python Use Cases -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5em; margin: 2em 0; max-width: 900px; margin-left: auto; margin-right: auto; text-align: left;">
+                    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1px solid var(--border-light); padding: 1.5em; border-radius: 12px; box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.8em; font-size: 1.1em; font-weight: 600;">🚀 What You Can Build</h4>
+                        <ul style="font-size: 0.85em; line-height: 1.6; color: var(--text-medium); margin: 0; padding-left: 1.2em;">
+                            <li>Web applications & APIs</li>
+                            <li>Data science & AI models</li>
+                            <li>Desktop applications</li>
+                            <li>Automation scripts</li>
+                            <li>Games & multimedia</li>
+                        </ul>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1px solid var(--border-light); padding: 1.5em; border-radius: 12px; box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                        <h4 style="color: var(--secondary-color); margin-bottom: 0.8em; font-size: 1.1em; font-weight: 600;">⭐ Why Python Rocks</h4>
+                        <ul style="font-size: 0.85em; line-height: 1.6; color: var(--text-medium); margin: 0; padding-left: 1.2em;">
+                            <li>Easy to read and write</li>
+                            <li>Beginner-friendly syntax</li>
+                            <li>Huge community support</li>
+                            <li>Cross-platform compatibility</li>
+                            <li>Rapid development</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Fun Fact -->
+                <div style="background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%); border-left: 4px solid var(--warning-color); padding: 1.5em; margin: 2em auto; border-radius: 8px; box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1); max-width: 600px;">
+                    <p style="margin: 0; font-size: 0.95em; font-style: italic;"><strong>🎪 Fun Fact:</strong> Python is named after Monty Python's Flying Circus, not the snake! Guido van Rossum wanted a name that was short, unique, and slightly mysterious.</p>
+                </div>
+
+                <!-- Bottom tagline with better styling -->
+                <div style="margin-top: 2.5em; padding-top: 1.5em; border-top: 2px solid var(--border-light);">
+                    <p style="font-size: 0.9em; color: var(--text-lighter); font-weight: 300; line-height: 1.4;">
+                        <span style="display: block; font-weight: 500; color: var(--text-medium);">From absolute basics to advanced concepts</span>
+                        Master the language that powers Netflix, Instagram, Spotify, and NASA
+                    </p>
+                </div>
+            </section>
+
+            <!-- Agenda -->
+            <section>
+                <section>
+                    <h2>📋 Learning Roadmap</h2>
+                    <div class="content-container">
+                        <div class="info-box">
+                            <h4>🚀 What You'll Learn</h4>
+                            <ul style="font-size: 0.9em; line-height: 1.8; columns: 2; column-gap: 3em;">
+                                <li>Python Origins & Philosophy</li>
+                                <li>Getting Started & Installation</li>
+                                <li>Basic Syntax & Variables</li>
+                                <li>Data Types & Collections</li>
+                                <li>Functions & Scope</li>
+                                <li>Advanced Data Structures</li>
+                                <li>Object-Oriented Programming</li>
+                                <li>Error Handling & Debugging</li>
+                                <li>Python Internals & Performance</li>
+                                <li>Advanced Features & Patterns</li>
+                                <li>Testing & Code Quality</li>
+                                <li>Ecosystem & Real-world Applications</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="margin-top: 2em; text-align: center;">
+                            <p style="font-size: 0.85em; color: var(--text-light); font-style: italic;">
+                                From absolute beginner to confident Python developer in one comprehensive journey
+                            </p>
+                        </div>
+                    </div>
+                        <div style="margin-top: 1.5em; text-align: center;">
+                        <div class="fun-fact" style="font-size: 0.8em; padding: 1em;">
+                            <p style="margin: 0;"><strong>🎪 Fun Fact:</strong> Named after Monty Python's Flying Circus, not the snake!</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 1: Python History -->
+            <section>
+                <section>
+                    <h2>📚 Chapter 1: Python History</h2>
+                    <div class="content-container">
+                        <p style="text-align: center; font-size: 0.8em; color: var(--text-light); margin-bottom: 1.5em;">
+                            From a Christmas vacation project to powering the world's technology
+                        </p>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-year">1989</div>
+                                    <div class="timeline-title">🎄 Christmas Creation</div>
+                                    <div class="timeline-description">
+                                        Guido van Rossum starts Python during Christmas holidays. Named after Monty Python!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-year">1991</div>
+                                    <div class="timeline-title">🐍 First Release</div>
+                                    <div class="timeline-description">
+                                        Python 0.9.0 released with classes, inheritance, and exception handling.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content timeline-highlight">
+                                    <div class="timeline-year">2000</div>
+                                    <div class="timeline-title">📦 Python 2.0</div>
+                                    <div class="timeline-description">
+                                        List comprehensions, garbage collection, and Unicode support.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-year">2008</div>
+                                    <div class="timeline-title">⚡ Python 3.0</div>
+                                    <div class="timeline-description">
+                                        Revolutionary release! Not backward compatible but fixed many design issues.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content timeline-highlight">
+                                    <div class="timeline-year">2020</div>
+                                    <div class="timeline-title">🔚 Python 2 EOL</div>
+                                    <div class="timeline-description">
+                                        Python 2 end of life. Community fully embraces Python 3.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content timeline-highlight">
+                                    <div class="timeline-year">2024</div>
+                                    <div class="timeline-title">🚀 Modern Era</div>
+                                    <div class="timeline-description">
+                                        Python 3.12+ with performance improvements. #1 language worldwide!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 4.5em; text-align: center;"></div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎯 The Zen of Python</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <pre><code class="python">import this</code></pre>
+                                <div class="info-box">
+                                    <p>Try this in your Python interpreter to see the full Zen!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Key Principles:</h3>
+                                <ul>
+                                    <li>Beautiful is better than ugly</li>
+                                    <li>Explicit is better than implicit</li>
+                                    <li>Simple is better than complex</li>
+                                    <li>Readability counts</li>
+                                    <li>There should be one obvious way to do it</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 2: Python Basics -->
+            <section>
+                <section>
+                    <h2>🚀 Chapter 2: Python Basics</h2>
+                    <div class="content-container">
+                        <h3>Your First Python Program</h3>
+                        <pre><code class="python"># The classic hello world
+print("Hello, World!")
+
+# Python is interactive - try the REPL!
+# Just type 'python' in your terminal</code></pre>
+                        
+                        <div class="beginner-note">
+                            <p><strong>🌱 For Beginners:</strong> Python code reads like English! The <code>print()</code> function displays text on screen. No semicolons needed!</p>
+                        </div>
+                        
+                        <h3>Variables - Python's Smart Storage</h3>
+                        <pre><code class="python"># No need to declare types - Python is smart!
+name = "Alice"        # String (text)
+age = 25             # Integer (whole number)
+height = 5.6         # Float (decimal number)
+is_student = True    # Boolean (True/False)
+nothing = None       # NoneType (represents "nothing")</code></pre>
+                        
+                        <div class="two-columns">
+                            <div>
+                                <div class="tip-box">
+                                    <p><strong>💡 Naming Rules:</strong><br>
+                                    • Use lowercase with underscores<br>
+                                    • Start with letter or underscore<br>
+                                    • Be descriptive: <code>user_age</code> not <code>a</code></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="info-box">
+                                    <p><strong>🔍 Dynamic Typing:</strong><br>
+                                    Variables can change type during runtime.<br>
+                                    <code>x = 5</code> then <code>x = "hello"</code> is valid!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🔧 Python's Unique Features</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Indentation: Python's Superpower</h3>
+                                <pre><code class="python"># Indentation defines code blocks
+if age >= 18:
+    print("You can vote!")    # 4 spaces indent
+    if age >= 21:
+        print("You can drink!") # 8 spaces indent
+print("Outside the if block")     # No indent</code></pre>
+                                
+                                <div class="beginner-note">
+                                    <p><strong>🌱 Tip:</strong> Use 4 spaces for each indent level. Most editors do this automatically!</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Multiple Assignment Magic</h3>
+                                <pre><code class="python"># Assign multiple variables at once
+x, y, z = 1, 2, 3
+
+# Swap variables (no temp variable needed!)
+a, b = 10, 20
+a, b = b, a  # a=20, b=10
+
+# Unpack sequences
+first, second, *rest = [1, 2, 3, 4, 5]
+# first=1, second=2, rest=[3, 4, 5]</code></pre>
+                                
+                                <div class="tip-box">
+                                    <p><strong>💡 Tip:</strong> This is called "iterable unpacking" - very Pythonic!</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Python's Interactive Nature</h3>
+                        <pre><code class="python"># Python REPL (Read-Eval-Print Loop)
+>>> 2 + 3
+5
+>>> name = "Python"
+>>> f"I love {name}!"
+'I love Python!'
+>>> help(print)  # Get help on any function!</code></pre>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 3: Data Types -->
+            <section>
+                <section>
+                    <h2>🏗️ Chapter 3: Data Types Deep Dive</h2>
+                    <div class="content-container">
+                        <h3>Numbers: More Than Just Math</h3>
+                        <div class="two-columns">
+                            <div>
+                                <pre><code class="python"># Integers - unlimited precision!
+small = 42
+big = 10**1000  # Yes, this works!
+
+# Different number bases
+binary = 0b1010      # 10 in decimal
+octal = 0o12         # 10 in decimal  
+hex_num = 0xA        # 10 in decimal
+
+# Underscores for readability
+million = 1_000_000</code></pre>
+                            </div>
+                            <div>
+                                <pre><code class="python"># Floats and precision
+pi = 3.14159
+scientific = 1.5e-4  # 0.00015
+infinity = float('inf')
+
+# Complex numbers (yes, really!)
+z = 3 + 4j
+print(z.real)        # 3.0
+print(z.imag)        # 4.0
+print(abs(z))        # 5.0</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="beginner-note">
+                            <p><strong>🌱 For Beginners:</strong> Unlike many languages, Python integers have unlimited precision - no overflow errors!</p>
+                        </div>
+                        
+                        <div class="expert-note">
+                            <p><strong>⚡ Expert Insight:</strong> Python uses arbitrary precision arithmetic. For performance-critical code, consider NumPy arrays.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📝 Strings: Text Processing Powerhouse</h2>
+                    <div class="content-container">
+                        <h3>String Creation & Formatting</h3>
+                        <div class="two-columns">
+                        <div>
+                        <pre><code class="python"># Multiple ways to create strings
+single = 'Hello'
+double = "World"  
+triple = """This spans
+multiple lines
+and preserves formatting"""
+</code></pre>
+                        </div>
+                        <div>
+                        <pre><code class="python"># Modern f-string formatting (Python 3.6+)
+name = "Alice"
+age = 30
+message = f"Hi, I'm {name} and I'm {age} years old"
+
+# Advanced f-string features
+price = 19.99
+print(f"Price: ${price:.2f}")  # Price: $19.99
+print(f"Binary: {42:b}")       # Binary: 101010
+                        </code></pre>
+                        </div>
+                        </div>
+                        <div class="two-columns">
+                            <div>
+                                <h4>String Methods Essentials</h4>
+                                <pre><code class="python">text = "  Python Programming  "
+print(text.strip())           # Remove whitespace
+print(text.upper())           # UPPERCASE
+print(text.lower())           # lowercase
+print(text.title())           # Title Case
+print(text.replace("Python", "Java"))
+print("Python" in text)       # True</code></pre>
+                            </div>
+                            <div>
+                                <h4>String Splitting & Joining</h4>
+                                <pre><code class="python">sentence = "Python is awesome"
+words = sentence.split()      # ['Python', 'is', 'awesome']
+csv_data = "apple,banana,cherry"
+fruits = csv_data.split(",")
+
+# Join is the opposite of split
+numbers = ["1", "2", "3"]
+result = "-".join(numbers)    # "1-2-3"</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <p><strong>💡 Performance Tip:</strong> F-strings are the fastest way to format strings in Python 3.6+!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📚 Collections: Data Containers</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Lists: Dynamic Arrays</h3>
+                                <pre><code class="python"># Creating and modifying lists
+fruits = ["apple", "banana", "cherry"]
+fruits.append("date")         # Add to end
+fruits.insert(1, "apricot")   # Insert at position
+fruits.remove("banana")       # Remove by value
+popped = fruits.pop()         # Remove and return last
+
+# List slicing (very powerful!)
+numbers = [0, 1, 2, 3, 4, 5]
+print(numbers[1:4])    # [1, 2, 3]
+print(numbers[:3])     # [0, 1, 2]
+print(numbers[::2])    # [0, 2, 4] (every 2nd)
+print(numbers[::-1])   # [5, 4, 3, 2, 1, 0] (reverse)</code></pre>
+                                
+                                <h4>List Comprehensions</h4>
+                                <pre><code class="python"># Elegant way to create lists
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+words = ["hello", "world", "python"]
+lengths = [len(word) for word in words]</code></pre>
+                            </div>
+                            <div>
+                                <h3>Dictionaries: Key-Value Power</h3>
+                                <pre><code class="python"># Modern dictionary syntax
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "NYC",
+    "skills": ["Python", "JavaScript"]
+}
+
+# Accessing and modifying
+print(person["name"])           # Alice
+print(person.get("salary", 0))  # 0 (default)
+person["age"] = 31              # Update
+person["country"] = "USA"       # Add new key
+
+# Dictionary methods
+print(person.keys())            # All keys
+print(person.values())          # All values
+print(person.items())           # Key-value pairs</code></pre>
+                                
+                                <h4>Dict Comprehensions</h4>
+                                <pre><code class="python"># Create dicts elegantly
+squares = {x: x**2 for x in range(5)}
+# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+word_lengths = {
+    word: len(word) 
+    for word in ["python", "java", "rust"]
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎯 Tuples & Sets: Specialized Collections</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Tuples: Immutable Sequences</h3>
+                                <pre><code class="python"># Tuples are immutable (can't change)
+point = (10, 20)
+rgb_color = (255, 128, 0)
+
+# Tuple unpacking
+x, y = point           # x=10, y=20
+r, g, b = rgb_color    # r=255, g=128, b=0
+
+# Named tuples (more readable)
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(10, 20)
+print(p.x, p.y)       # 10 20</code></pre>
+                                
+                                <div class="beginner-note">
+                                    <p><strong>🌱 When to use tuples:</strong> For fixed data that won't change (coordinates, RGB colors, database records).</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Sets: Unique Collections</h3>
+                                <pre><code class="python"># Sets automatically remove duplicates
+unique_nums = {1, 2, 3, 3, 2}  # {1, 2, 3}
+colors = {"red", "blue", "green"}
+
+# Set operations
+set1 = {1, 2, 3, 4}
+set2 = {3, 4, 5, 6}
+
+print(set1 & set2)    # Intersection: {3, 4}
+print(set1 | set2)    # Union: {1, 2, 3, 4, 5, 6}
+print(set1 - set2)    # Difference: {1, 2}
+
+# Fast membership testing
+large_set = set(range(1000000))
+print(500000 in large_set)  # Very fast!</code></pre>
+                                
+                                <div class="tip-box">
+                                    <p><strong>💡 Performance:</strong> Sets use hash tables - membership testing is O(1) average case!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📦 Unpacking: The Magic of * and **</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Unpacking Lists</h3>
+                                <pre><code class="python"># Unpacking lists
+numbers = [1, 2, 3, 4, 5]
+first, *rest = numbers  # first=1, rest=[2, 3, 4, 5]
+                                </code></pre>
+                            
+                            </div>
+                            <div>
+                                <h3>Unpacking Tuples</h3>
+                                <pre><code class="python"># Unpacking tuples
+point = (10, 20)
+x, y = point  # x=10, y=20
+
+# Unpacking multiple values
+a, b, c = (1, 2, 3)  # a=1, b=2, c=3
+
+# Unpacking tuples with *
+fruits = ('apple', 'banana', 'cherry', 'strawberry')
+x, y, *z = fruits  
+# x='apple', y='banana', z=['cherry', 'strawberry']
+                                </code></pre>    
+                            </div>
+                            <div>
+                                <h3>Unpacking Sets</h3>
+                                <pre><code class="python"># Unpacking sets
+unique_nums = {1, 2, 3}
+x, y, z = unique_nums  # x=1, y=2, z=3
+
+# Unpacking sets with *
+numbers = {1, 2, 3, 4, 5}
+first, *rest = numbers  # first=1, rest=[2, 3, 4, 5]
+
+                                </code></pre>    
+                            </div>
+                            <div>
+                                <h3>Unpacking Dictionaries</h3>
+                                <pre><code class="python"># Unpacking dictionaries
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "NYC"
+}
+first, *rest = person
+# first="name", rest=['age', 'city']
+                                </code></pre>    
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                                <section>
+                    <h2>📦 Unpacking: Some more magic with dictionaries</h2>
+                     <div>
+                                <h3>Unpacking Dictionaries</h3>
+                                <pre><code class="python"># Unpacking dictionaries
+person = {'name': 'John', 'age': 30, 'city': 'New York'}
+name, age, city = person.items()
+# But note that items() returns a list of tuples, 
+#so you would actually get name as ('name', 'John'), age as ('age', 30), and city as ('city', 'New York').
+
+
+person = {'name': 'John', 'age': 30, 'city': 'New York'}
+keys = [*person]
+values = [*person.values()]
+                                </code></pre>
+                            
+                            </div>
+                            <div>
+                            <h3>Unpacking dictionaries with **</h3>
+                            <pre><code class="python"># the ** operator can be used to unpack dictionaries and 
+# pass their key-value pairs as keyword arguments to a function
+
+def vehicle_info(brand, model, year):
+    return brand, model, year
+    
+info = {"brand": "Ford", "model": "Mustang", "year": 1964}
+print(vehicle_info(**info))
+
+#OUTPUT: ('Ford', 'Mustang', 1964)
+                            </code></pre>
+                            </div>
+                            
+                </section>
+
+                <section>
+                    <h2>📊 Data Types Comparison Matrix</h2>
+                    <div class="content-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Mutable</th>
+                                    <th>Ordered</th>
+                                    <th>Duplicates</th>
+                                    <th>Indexable</th>
+                                    <th>Common Use Cases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>int, float</strong></td><td>❌</td><td>N/A</td><td>N/A</td><td>N/A</td><td>Numbers, calculations</td></tr>
+                                <tr><td><strong>str</strong></td><td>❌</td><td>✅</td><td>✅</td><td>✅</td><td>Text, messages, names</td></tr>
+                                <tr><td><strong>list</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Dynamic collections, stacks</td></tr>
+                                <tr><td><strong>tuple</strong></td><td>❌</td><td>✅</td><td>✅</td><td>✅</td><td>Fixed data, coordinates</td></tr>
+                                <tr><td><strong>dict</strong></td><td>✅</td><td>✅*</td><td>Keys: ❌</td><td>By key</td><td>Mappings, configs, caches</td></tr>
+                                <tr><td><strong>set</strong></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>Unique items, math operations</td></tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size: 0.75em; text-align: center; color: var(--text-light);">
+                            * Dictionaries maintain insertion order since Python 3.7+
+                        </p>
+                        
+                        <div class="expert-note">
+                            <p><strong>⚡ Tip</strong> Use lists for sequences you'll modify, tuples for fixed data, dicts for lookups, sets for uniqueness and math operations.</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 4: Functions & Objects -->
+            <section>
+                <section>
+                    <h2>🔧 Chapter 4: Functions & Objects</h2>
+                    <div class="content-container">
+                        <h3>Functions: Code Building Blocks</h3>
+                        <pre><code class="python"># Basic function definition
+def greet(name):
+    """Greet a person by name."""
+    return f"Hello, {name}!"
+
+# Calling the function
+message = greet("Alice")
+print(message)  # Hello, Alice!</code></pre>
+                        
+                        <div class="beginner-note">
+                            <p><strong>🌱 Note:</strong> Functions are like mini-block of code that take inputs (parameters) and return outputs. They help avoid repeating code!</p>
+                        </div>
+
+                        
+                        <h3>Functions are First-Class Citizens</h3>
+                        <div class="two-columns">
+                        <div>
+                        <pre><code class="python"># Functions are objects - you can treat them like variables!
+def square(x):
+    return x * x
+
+def cube(x):
+    return x * x * x
+
+# Store functions in variables
+my_function = square
+print(my_function(5))  # 25
+</code></pre>
+                        </div>
+                        <div>
+                        <pre><code class="python"># Store functions in lists
+operations = [square, cube]
+for op in operations:
+    print(f"Operation on 3: {op(3)}")
+
+# Pass functions as arguments
+def apply_operation(func, value):
+    return func(value)
+
+result = apply_operation(square, 4)  # 16</code></pre>
+                        </div>
+                        </div>
+
+                        
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎯 Function Parameters Mastery</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Parameter Types</h3>
+                                <pre><code class="python"># Positional arguments
+def introduce(name, age, city):
+    return f"I'm {name}, {age} years old, from {city}"
+
+# Keyword arguments
+intro = introduce(name="Alice", city="NYC", age=25)
+
+# Default parameters
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+print(greet("Bob"))              # Hello, Bob!
+print(greet("Bob", "Hi"))        # Hi, Bob!</code></pre>
+                                
+
+                            </div>
+                            <div>
+                                <h3>*args and **kwargs</h3>
+                                <pre><code class="python"># *args: variable positional arguments
+def sum_all(*numbers):
+    return sum(numbers)
+
+print(sum_all(1, 2, 3, 4, 5))  # 15
+
+# **kwargs: variable keyword arguments
+def create_profile(**info):
+    for key, value in info.items():
+        print(f"{key}: {value}")
+
+create_profile(name="Alice", age=30, city="NYC")
+</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                         <pre><code class="python"># Combining all parameter types
+def flexible_func(required, default="hi", *args, **kwargs):
+    print(f"Required: {required}")
+    print(f"Default: {default}")
+    print(f"Args: {args}")
+    print(f"Kwargs: {kwargs}")
+                         </code></pre>
+                        </div>
+                        <div class="beginner-note">
+                            <p><strong>🌱 Tip:</strong> Default parameters make functions more flexible. Put them after required parameters!</p>
+                        </div>
+                        <div class="tip-box">
+                            <p><strong>💡 Memory Aid:</strong> *args = "arguments" (tuple), **kwargs = "keyword arguments" (dictionary)</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🏭 Lambda Functions & Functional Programming</h2>
+                    <div class="content-container">
+                        <h3>Lambda: Quick Anonymous Functions</h3>
+                        <pre><code class="python"># Lambda syntax: lambda parameters: expression
+square = lambda x: x**2
+add = lambda x, y: x + y
+
+print(square(5))    # 25
+print(add(3, 4))    # 7
+
+# Lambdas shine with higher-order functions
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Filter even numbers
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print(evens)  # [2, 4, 6, 8, 10]
+
+# Square all numbers
+squares = list(map(lambda x: x**2, numbers))
+print(squares)  # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+# Sort by custom criteria
+students = [("Alice", 85), ("Bob", 90), ("Charlie", 78)]
+by_grade = sorted(students, key=lambda student: student[1])
+print(by_grade)  # [('Charlie', 78), ('Alice', 85), ('Bob', 90)]</code></pre>
+                        
+                        <div class="two-columns">
+                            <div>
+                                <div class="tip-box">
+                                    <p><strong>💡 When to use lambdas:</strong><br>
+                                    • Simple, one-line functions<br>
+                                    • With map(), filter(), sort()<br>
+                                    • Callbacks and event handling</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="info-box">
+                                    <p><strong>🔍 Alternatives to lambdas:</strong><br>
+                                    • List comprehensions (often clearer)<br>
+                                    • Generator expressions<br>
+                                    • Regular functions for complex logic</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎖️ Advanced Function Concepts</h2>
+                    <div class="content-container">
+                        <h3>Scope and Closures</h3>
+                        <pre><code class="python"># Local vs Global scope
+global_var = "I'm global"
+
+def outer_function():
+    outer_var = "I'm in outer"
+    
+    def inner_function():
+        inner_var = "I'm in inner"
+        print(f"Access: {global_var}, {outer_var}, {inner_var}")
+    
+    return inner_function
+
+# Closure: inner function remembers outer scope
+closure = outer_function()
+closure()  # Access: I'm global, I'm in outer, I'm in inner
+
+# Practical closure example: function factory
+def create_multiplier(factor):
+    def multiplier(x):
+        return x * factor
+    return multiplier
+
+double = create_multiplier(2)
+triple = create_multiplier(3)
+
+print(double(5))  # 10
+print(triple(5))  # 15</code></pre>
+                        
+                        <div class="expert-note">
+                            <p><strong>⚡ Expert Insight:</strong> Closures are powerful for creating specialized functions, decorators, and maintaining state without classes.</p>
+                        </div>
+                        
+                    </div>
+                </section>
+                <section>
+                <h2>💭 Type Hints: Modern Python</h2>
+                        <pre><code class="python">from typing import List, Dict, Optional, Union
+
+def process_numbers(numbers: List[int]) -> Dict[str, int]:
+    """Process a list of numbers and return statistics."""
+    return {
+        "count": len(numbers),
+        "sum": sum(numbers),
+        "max": max(numbers) if numbers else 0
+    }
+
+def find_user(user_id: int) -> Optional[str]:
+    """Find user by ID, return name or None if not found."""
+    users = {1: "Alice", 2: "Bob"}
+    return users.get(user_id)
+
+# Union types for multiple possible types
+def format_value(value: Union[str, int, float]) -> str:
+    return f"Value: {value}"</code></pre>
+                </section>
+            </section>
+
+            <!-- Chapter 5: Advanced Concepts -->
+            <section>
+                <section>
+                    <h2>🚀 Chapter 5: Advanced Concepts</h2>
+                    <div class="content-container">
+                        <h3>List Comprehensions</h3>
+                        <pre><code class="python"># Basic list comprehension
+squares = [x**2 for x in range(10)]
+
+# With condition
+evens = [x for x in range(20) if x % 2 == 0]
+
+# Nested comprehensions
+matrix = [[i*j for j in range(3)] for i in range(3)]
+
+# Dictionary comprehension
+word_lengths = {word: len(word) for word in ["python", "is", "awesome"]}
+
+# Set comprehension
+unique_lengths = {len(word) for word in ["hello", "world", "hello"]}</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎭 Decorators</h2>
+                    <div class="content-container">
+                        <pre><code class="python"># Simple decorator
+def my_decorator(func):
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Output:
+# Before function call
+# Hello!
+# After function call</code></pre>
+                        
+                        <div class="info-box">
+                            <p>Decorators allow you to modify or extend the behavior of functions without changing their code.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🔄 Context Managers</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Using 'with' statement</h3>
+                                <pre><code class="python"># File handling
+with open('file.txt', 'r') as f:
+    content = f.read()
+# File automatically closed
+
+# Custom context manager
+from contextlib import contextmanager
+
+@contextmanager
+def my_context():
+    print("Entering context")
+    yield "resource"
+    print("Exiting context")</code></pre>
+                            </div>
+                            <div>
+                                <h3>Benefits</h3>
+                                <ul>
+                                    <li>Automatic resource cleanup</li>
+                                    <li>Exception handling</li>
+                                    <li>Cleaner, more readable code</li>
+                                    <li>Guaranteed execution of cleanup code</li>
+                                </ul>
+                                
+                                <div class="tip-box">
+                                    <p><strong>💡 Pro Tip:</strong> Always use context managers for resource management!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>⚡ Generators</h2>
+                    <div class="content-container">
+                        <pre><code class="python"># Generator function
+def count_up_to(max):
+    count = 1
+    while count <= max:
+        yield count
+        count += 1
+
+# Use generator
+counter = count_up_to(3)
+for num in counter:
+    print(num)  # 1, 2, 3
+
+# Generator expression
+squares_gen = (x**2 for x in range(1000000))  # Memory efficient!
+
+# Infinite generator
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b</code></pre>
+                        
+                        <div class="fun-fact">
+                            <p>Generators are memory-efficient because they produce values on-demand instead of storing everything in memory!</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 6: Object-Oriented Programming -->
+            <section>
+                <section>
+                    <h2>🏛️ Chapter 6: Object-Oriented Programming</h2>
+                    <div class="content-container">
+                        <h3>Classes: Building Your Own Types</h3>
+                        <pre><code class="python"># Basic class definition
+class Dog:
+    # Class variable (shared by all instances)
+    species = "Canis lupus"
+    
+    def __init__(self, name, age, breed):
+        # Instance variables (unique to each object)
+        self.name = name
+        self.age = age
+        self.breed = breed
+    
+    def bark(self):
+        return f"{self.name} says Woof!"
+    
+    def celebrate_birthday(self):
+        self.age += 1
+        return f"Happy birthday {self.name}! Now {self.age} years old."
+    
+    def __str__(self):
+        return f"{self.name} is a {self.age}-year-old {self.breed}"
+
+# Creating and using objects
+buddy = Dog("Buddy", 3, "Golden Retriever")
+max_dog = Dog("Max", 5, "German Shepherd")
+
+print(buddy.bark())                    # Buddy says Woof!
+print(buddy.celebrate_birthday())      # Happy birthday Buddy! Now 4 years old.
+print(buddy)                          # Buddy is a 4-year-old Golden Retriever</code></pre>
+                        
+                        <div class="beginner-note">
+                            <p><strong>🌱 OOP Concept:</strong> Classes are blueprints for creating objects. Objects are instances of classes with their own data (attributes) and behaviors (methods).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🔗 Inheritance: Code Reuse & Relationships</h2>
+                    <div class="content-container">
+                        <h3>Basic Inheritance</h3>
+                        <pre><code class="python"># Parent class (base class)
+class Animal:
+                def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def speak(self):
+        pass  # Abstract method - to be overridden
+    
+    def sleep(self):
+        return f"{self.name} is sleeping..."
+    
+    def get_info(self):
+        return f"{self.name} is {self.age} years old"
+
+# Child classes (derived classes)
+class Dog(Animal):
+    def __init__(self, name, age, breed):
+        super().__init__(name, age)  # Call parent constructor
+        self.breed = breed
+    
+    def speak(self):
+        return f"{self.name} barks: Woof!"
+    
+    def fetch(self):
+        return f"{self.name} is fetching the ball!"
+
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} meows: Meow!"
+    
+    def climb(self):
+        return f"{self.name} is climbing a tree!"</code></pre>
+                        
+                        <div class="two-columns">
+                            <div>
+                                <h4>Polymorphism in Action</h4>
+                                <pre><code class="python"># Different objects, same interface
+animals = [
+    Dog("Buddy", 3, "Labrador"),
+    Cat("Whiskers", 2),
+    Dog("Rex", 5, "German Shepherd")
+]
+
+# Polymorphism: same method, different behavior
+for animal in animals:
+    print(animal.speak())
+    print(animal.sleep())
+
+# Output:
+# Buddy barks: Woof!
+# Buddy is sleeping...
+# Whiskers meows: Meow!
+# Whiskers is sleeping...</code></pre>
+                            </div>
+                            <div>
+                                <h4>Method Resolution Order</h4>
+                                <pre><code class="python"># Multiple inheritance
+class Mammal:
+    def breathe(self):
+        return "Breathing air"
+
+class Pet:
+    def play(self):
+        return "Playing with owner"
+
+class Dog(Animal, Mammal, Pet):
+    def speak(self):
+        return f"{self.name} barks!"
+
+# Check Method Resolution Order
+print(Dog.__mro__)
+# (<class 'Dog'>, <class 'Animal'>, 
+#  <class 'Mammal'>, <class 'Pet'>, <class 'object'>)
+
+dog = Dog("Buddy", 3)
+print(dog.breathe())  # From Mammal
+print(dog.play())     # From Pet</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🔒 Encapsulation: Data Protection</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Access Control</h3>
+                                <pre><code class="python">class BankAccount:
+    def __init__(self, account_number, initial_balance):
+        self.account_number = account_number
+        self._balance = initial_balance        # Protected (convention)
+        self.__pin = "1234"                   # Private (name mangling)
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+            return f"Deposited ${amount}. New balance: ${self._balance}"
+        return "Invalid deposit amount"
+    
+    def withdraw(self, amount, pin):
+        if pin != self.__pin:
+            return "Invalid PIN"
+        if amount > self._balance:
+            return "Insufficient funds"
+        if amount > 0:
+            self._balance -= amount
+            return f"Withdrew ${amount}. New balance: ${self._balance}"
+        return "Invalid withdrawal amount"
+    
+    def get_balance(self, pin):
+        if pin != self.__pin:
+            return "Invalid PIN"
+        return f"Current balance: ${self._balance}"
+
+account = BankAccount("12345", 1000)
+print(account.deposit(500))           # Deposited $500. New balance: $1500
+print(account.withdraw(200, "1234"))  # Withdrew $200. New balance: $1300</code></pre>
+                            </div>
+                            <div>
+                                <h3>Properties: Pythonic Getters/Setters</h3>
+                                <pre><code class="python">class Temperature:
+    def __init__(self, celsius=0):
+        self._celsius = celsius
+    
+    @property
+    def celsius(self):
+        return self._celsius
+    
+    @celsius.setter
+    def celsius(self, value):
+        if value < -273.15:
+            raise ValueError("Temperature below absolute zero is not possible")
+        self._celsius = value
+    
+    @property
+    def fahrenheit(self):
+        return (self._celsius * 9/5) + 32
+    
+    @fahrenheit.setter
+    def fahrenheit(self, value):
+        self.celsius = (value - 32) * 5/9
+    
+    @property
+    def kelvin(self):
+        return self._celsius + 273.15
+
+# Usage
+temp = Temperature(25)
+print(f"Celsius: {temp.celsius}")      # 25
+print(f"Fahrenheit: {temp.fahrenheit}") # 77.0
+print(f"Kelvin: {temp.kelvin}")        # 298.15
+
+temp.fahrenheit = 100  # Set via Fahrenheit
+print(f"Celsius: {temp.celsius}")      # 37.77777777777778</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <p><strong>💡 Python Convention:</strong> Single underscore (_) = "internal use", double underscore (__) = "really private" (name mangled).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎯 Advanced OOP Concepts</h2>
+                    <div class="content-container">
+                        <h3>Magic Methods (Dunder Methods)</h3>
+                        <pre><code class="python">class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+    
+    def __repr__(self):
+        return f"Vector(x={self.x}, y={self.y})"
+    
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+    
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+    
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+    
+    def __len__(self):
+        return int((self.x**2 + self.y**2)**0.5)
+    
+    def __getitem__(self, key):
+        if key == 0:
+            return self.x
+        elif key == 1:
+            return self.y
+        else:
+            raise IndexError("Vector index out of range")
+
+# Using magic methods
+v1 = Vector(3, 4)
+v2 = Vector(1, 2)
+
+print(v1)           # Vector(3, 4)
+print(v1 + v2)      # Vector(4, 6)
+print(v1 * 2)       # Vector(6, 8)
+print(len(v1))      # 5
+print(v1[0])        # 3 (accessing like a list)
+print(v1 == v2)     # False</code></pre>
+                        
+                        <div class="two-columns">
+                            <div>
+                                <h4>Class Methods & Static Methods</h4>
+                                <pre><code class="python">class Person:
+    population = 0  # Class variable
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        Person.population += 1
+    
+    @classmethod
+    def get_population(cls):
+        return f"Total population: {cls.population}"
+    
+    @classmethod
+    def from_string(cls, person_str):
+        name, age = person_str.split('-')
+        return cls(name, int(age))
+    
+    @staticmethod
+    def is_adult(age):
+        return age >= 18
+    
+    def __del__(self):
+        Person.population -= 1
+
+# Usage
+p1 = Person("Alice", 25)
+p2 = Person.from_string("Bob-30")  # Alternative constructor
+
+print(Person.get_population())     # Total population: 2
+print(Person.is_adult(16))         # False</code></pre>
+                            </div>
+                            <div>
+                                <h4>Abstract Base Classes</h4>
+                                <pre><code class="python">from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+    
+    @abstractmethod
+    def perimeter(self):
+        pass
+    
+    def describe(self):
+        return f"This shape has area {self.area()}"
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+# Cannot instantiate abstract class
+# shape = Shape()  # TypeError!
+
+rect = Rectangle(5, 3)
+print(rect.area())        # 15
+print(rect.describe())    # This shape has area 15</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🏗️ Design Patterns in Python</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h4>Singleton Pattern</h4>
+                                <pre><code class="python">class DatabaseConnection:
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if not self._initialized:
+            self.connection_string = "localhost:5432"
+            self._initialized = True
+    
+    def query(self, sql):
+        return f"Executing: {sql}"
+
+# Usage
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
+print(db1 is db2)  # True - same instance</code></pre>
+                                
+                                <h4>Factory Pattern</h4>
+                                <pre><code class="python">class AnimalFactory:
+    @staticmethod
+    def create_animal(animal_type, name):
+        if animal_type.lower() == "dog":
+            return Dog(name, 0, "Mixed")
+        elif animal_type.lower() == "cat":
+            return Cat(name, 0)
+        else:
+            raise ValueError(f"Unknown animal: {animal_type}")
+
+# Usage
+pet = AnimalFactory.create_animal("dog", "Buddy")
+print(pet.speak())  # Buddy barks: Woof!</code></pre>
+                            </div>
+                            <div>
+                                <h4>Observer Pattern</h4>
+                                <pre><code class="python">class Observable:
+    def __init__(self):
+        self._observers = []
+    
+    def attach(self, observer):
+        self._observers.append(observer)
+    
+    def notify(self, message):
+        for observer in self._observers:
+            observer.update(message)
+
+class EmailNotifier:
+    def update(self, message):
+        print(f"📧 Email: {message}")
+
+class SMSNotifier:
+    def update(self, message):
+        print(f"📱 SMS: {message}")
+
+class NewsService(Observable):
+    def publish_news(self, headline):
+        print(f"📰 Publishing: {headline}")
+        self.notify(headline)
+
+# Usage
+news = NewsService()
+news.attach(EmailNotifier())
+news.attach(SMSNotifier())
+
+news.publish_news("Python 4.0 Released!")
+# 📰 Publishing: Python 4.0 Released!
+# 📧 Email: Python 4.0 Released!
+# 📱 SMS: Python 4.0 Released!</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-note">
+                            <p><strong>⚡ Expert Advice:</strong> Design patterns solve common problems, but don't overuse them. Python's simplicity often provides better solutions than complex patterns.</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 7: Python Internals -->
+            <section>
+                <section>
+                    <h2>⚙️ Chapter 7: Python Internals</h2>
+                    <div class="content-container">
+                        <h3>The Global Interpreter Lock (GIL)</h3>
+                        <div class="info-box">
+                            <p><strong>What is the GIL?</strong> A mutex that protects access to Python objects, preventing multiple threads from executing Python code simultaneously.</p>
+                        </div>
+                        
+                        <div class="two-columns">
+                            <div>
+                                <h4>GIL Impact:</h4>
+                                <ul>
+                                    <li>Single-threaded execution for CPU-bound tasks</li>
+                                    <li>No performance gain from threading for compute</li>
+                                    <li>I/O operations release the GIL</li>
+                                    <li>Multiprocessing bypasses GIL limitations</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>Workarounds:</h4>
+                                <ul>
+                                    <li>Use multiprocessing for CPU-bound tasks</li>
+                                    <li>Use asyncio for I/O-bound tasks</li>
+                                    <li>Use C extensions (NumPy, etc.)</li>
+                                    <li>Consider alternative implementations (PyPy)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🧠 Memory Management</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Reference Counting</h3>
+                                <pre><code class="python">import sys
+
+a = [1, 2, 3]
+print(sys.getrefcount(a))  # 2
+
+b = a  # Reference count increases
+print(sys.getrefcount(a))  # 3
+
+del b  # Reference count decreases
+print(sys.getrefcount(a))  # 2</code></pre>
+                            </div>
+                            <div>
+                                <h3>Garbage Collection</h3>
+                                <ul>
+                                    <li><strong>Reference counting:</strong> Immediate cleanup</li>
+                                    <li><strong>Cycle detection:</strong> Handles circular references</li>
+                                    <li><strong>Generations:</strong> Optimizes collection frequency</li>
+                                    <li><strong>Manual control:</strong> <code>gc</code> module</li>
+                                </ul>
+                                
+                                <div class="tip-box">
+                                    <p><strong>💡 Pro Tip:</strong> Python's memory management is automatic, but understanding it helps with optimization!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🔍 Python Object Model</h2>
+                    <div class="content-container">
+                        <pre><code class="python"># Everything is an object
+print(type(42))         # <class 'int'>
+print(type(int))        # <class 'type'>
+print(type(type))       # <class 'type'>
+
+# Objects have identity, type, and value
+a = [1, 2, 3]
+print(id(a))           # Memory address
+print(type(a))         # <class 'list'>
+print(a)               # [1, 2, 3]
+
+# Mutable vs Immutable
+x = 5
+y = x
+x += 1
+print(y)  # 5 (int is immutable)
+
+list1 = [1, 2, 3]
+list2 = list1
+list1.append(4)
+print(list2)  # [1, 2, 3, 4] (list is mutable)</code></pre>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 8: Ecosystem & Libraries -->
+            <section>
+                <section>
+                    <h2>📦 Chapter 8: Python Ecosystem</h2>
+                    <div class="content-container">
+                        <h3>Popular Libraries & Frameworks</h3>
+                        <div class="two-columns">
+                            <div>
+                                <h4>🌐 Web Development</h4>
+                                <ul>
+                                    <li><strong>Django:</strong> Full-featured web framework</li>
+                                    <li><strong>Flask:</strong> Lightweight, flexible</li>
+                                    <li><strong>FastAPI:</strong> Modern, high-performance API framework</li>
+                                </ul>
+                                
+                                <h4>📊 Data Science</h4>
+                                <ul>
+                                    <li><strong>NumPy:</strong> Numerical computing</li>
+                                    <li><strong>Pandas:</strong> Data manipulation</li>
+                                    <li><strong>Matplotlib:</strong> Data visualization</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>🤖 Machine Learning</h4>
+                                <ul>
+                                    <li><strong>Scikit-learn:</strong> Machine learning toolkit</li>
+                                    <li><strong>TensorFlow:</strong> Deep learning</li>
+                                    <li><strong>PyTorch:</strong> Neural networks</li>
+                                </ul>
+                                
+                                <h4>⚡ Other Popular</h4>
+                                <ul>
+                                    <li><strong>Requests:</strong> HTTP library</li>
+                                    <li><strong>Pillow:</strong> Image processing</li>
+                                    <li><strong>SQLAlchemy:</strong> Database ORM</li>
+                                </ul>
+                            </div>
+                            <div>
+                            <h4>🔍 Testing</h4>
+                            <ul>
+                                <li><strong>pytest:</strong> Testing framework</li>
+                                <li><strong>unittest:</strong> Standard library testing</li>
+                                <li><strong>pytest-bdd:</strong> Behavior-driven development</li>
+                                <li><strong>robotframework:</strong> Automation framework</li>
+                                <li><strong>selenium:</strong> Web automation</li>
+                                <li><strong>locust:</strong> Load testing</li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📥 Package Management</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>pip - Package Installer</h3>
+                                <pre><code class="bash"># Install packages
+pip install requests
+pip install django==4.2.0
+
+# Requirements file
+pip install -r requirements.txt
+pip freeze > requirements.txt
+
+# Virtual environments
+python -m venv myenv
+source myenv/bin/activate  # Linux/Mac
+myenv\Scripts\activate     # Windows</code></pre>
+                            </div>
+                            <div>
+                                <h3>Best Practices</h3>
+                                <ul>
+                                    <li>Always use virtual environments</li>
+                                    <li>Pin package versions</li>
+                                    <li>Keep requirements.txt updated</li>
+                                    <li>Use pip-tools for dependency management</li>
+                                </ul>
+                                
+                                <div class="tip-box">
+                                    <p><strong>💡 Pro Tip:</strong> Use <code>pipenv</code> or <code>poetry</code> for advanced dependency management!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 9: Testing -->
+            <section>
+                <section>
+                    <h2>🧪 Chapter 9: Testing with pytest</h2>
+                    <div class="content-container">
+                        <h3>Why Test?</h3>
+                        <ul>
+                            <li>Catch bugs early</li>
+                            <li>Enable refactoring with confidence</li>
+                            <li>Document expected behavior</li>
+                            <li>Improve code design</li>
+                        </ul>
+                        
+                        <h3>Basic pytest Example</h3>
+                        <pre><code class="python"># test_math.py
+def add(a, b):
+    return a + b
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
+
+# Run with: pytest test_math.py</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🎯 Advanced Testing</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Fixtures</h3>
+                                <pre><code class="python">import pytest
+
+@pytest.fixture
+def sample_data():
+    return {"users": ["Alice", "Bob"]}
+
+def test_users(sample_data):
+    assert len(sample_data["users"]) == 2
+    assert "Alice" in sample_data["users"]</code></pre>
+                                
+                                <h3>Parametrized Tests</h3>
+                                <pre><code class="python">@pytest.mark.parametrize("a,b,expected", [
+    (2, 3, 5),
+    (0, 0, 0),
+    (-1, 1, 0)
+])
+def test_add_parametrized(a, b, expected):
+    assert add(a, b) == expected</code></pre>
+                            </div>
+                            <div>
+                                <h3>pytest-bdd</h3>
+                                <pre><code class="python"># features/calculator.feature
+Feature: Calculator
+  Scenario: Add two numbers
+    Given I have a calculator
+    When I add 2 and 3
+    Then the result is 5
+
+# test_calculator.py
+from pytest_bdd import scenarios, given, when, then
+
+scenarios('calculator.feature')
+
+@given('I have a calculator')
+def calculator():
+    return Calculator()
+
+@when('I add 2 and 3')
+def add_numbers(calculator):
+    calculator.result = calculator.add(2, 3)
+
+@then('the result is 5')
+def check_result(calculator):
+    assert calculator.result == 5</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Chapter 10: Real-world Applications -->
+            <section>
+                <section>
+                    <h2>🌍 Chapter 10: Real-world Applications</h2>
+                    <div class="content-container">
+                        <h3>Where Python Shines</h3>
+                        <div class="two-columns">
+                            <div>
+                                <h4>🔬 Data Science & AI</h4>
+                                <ul>
+                                    <li>Machine Learning models</li>
+                                    <li>Data analysis and visualization</li>
+                                    <li>Scientific computing</li>
+                                    <li>Research and experimentation</li>
+                                </ul>
+                                
+                                <h4>🌐 Web Development</h4>
+                                <ul>
+                                    <li>Backend APIs and services</li>
+                                    <li>Full-stack web applications</li>
+                                    <li>Microservices architecture</li>
+                                    <li>Content management systems</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>🤖 Automation & DevOps</h4>
+                                <ul>
+                                    <li>System administration scripts</li>
+                                    <li>CI/CD pipeline automation</li>
+                                    <li>Infrastructure as Code</li>
+                                    <li>Monitoring and logging</li>
+                                </ul>
+                                
+                                <h4>💼 Enterprise Applications</h4>
+                                <ul>
+                                    <li>Financial modeling</li>
+                                    <li>Business intelligence</li>
+                                    <li>ERP systems</li>
+                                    <li>Database applications</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>💡 Python Tips & Tricks</h2>
+                    <div class="content-container">
+                        <h3>Professional Tips</h3>
+                        <div>
+                            <ul>
+                                <li>Use list comprehensions for simple transformations</li>
+                                <li>Prefer enumerate() over range(len())</li>
+                                <li>Use zip() to iterate over multiple sequences</li>
+                                <li>Use pathlib instead of os.path for file operations</li>
+                                <li>Use dataclasses for simple data containers</li>
+                                <li>Use f-strings for string formatting</li>
+                                <li>Use sets for membership testing</li>
+                                <li>Use context managers for resource management</li>
+                                <li>Use type hints for better code documentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>🤯 Python Quirks</h2>
+                    <div class="content-container">
+                        <div class="two-columns">
+                            <div>
+                                <h3>Surprising Behaviors</h3>
+                                <pre><code class="python"># Quirk 1: Mutable default arguments
+def add_item(item, target=[]):
+    target.append(item)
+    return target
+
+print(add_item(1))  # [1]
+print(add_item(2))  # [1, 2] - Oops!
+
+# Quirk 2: Late binding closures
+funcs = []
+for i in range(3):
+    funcs.append(lambda: i)
+
+print([f() for f in funcs])  # [2, 2, 2]</code></pre>
+                            </div>
+                            <div>
+                                <h3>More Quirks</h3>
+                                <pre><code class="python"># Quirk 3: Integer caching
+a = 256
+b = 256
+print(a is b)  # True
+
+a = 257
+b = 257
+print(a is b)  # False (usually)
+
+# Quirk 4: Boolean arithmetic
+print(True + True)   # 2
+print(False * 42)    # 0
+
+# Quirk 5: Chained comparisons
+print(False == False in [False])  # True</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+            <section class="center">
+                <h2>🎉 Congratulations!</h2>
+                <div class="content-container">
+                    <p style="font-size: 1.2em; margin-bottom: 1.5em;">You've completed your comprehensive Python journey!</p>
+                    
+                    <div class="two-columns" style="text-align: left;">
+                        <div>
+                            <h3>🎯 You've Mastered:</h3>
+                            <ul>
+                                <li>Python fundamentals and syntax</li>
+                                <li>Data types and collections</li>
+                                <li>Functions and object-oriented programming</li>
+                                <li>Advanced features (decorators, generators)</li>
+                                <li>Testing and best practices</li>
+                                <li>Python ecosystem and libraries</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>🚀 Next Steps:</h3>
+                            <ul>
+                                <li><strong>Practice:</strong> Build real projects</li>
+                                <li><strong>Contribute:</strong> Open source projects</li>
+                                <li><strong>Learn:</strong> Specialized libraries</li>
+                                <li><strong>Connect:</strong> Join Python communities</li>
+                                <li><strong>Stay Updated:</strong> Follow Python news and PEPs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expert-note">
+                        <h4>🎖️ Expert Development Path</h4>
+                        <p><strong>Beginner → Intermediate:</strong> Focus on writing clean, readable code and understanding Python idioms</p>
+                        <p><strong>Intermediate → Advanced:</strong> Master async programming, metaclasses, and performance optimization</p>
+                        <p><strong>Advanced → Expert:</strong> Contribute to Python itself, mentor others, and design robust architectures</p>
+                    </div>
+                    
+                    <div class="fun-fact">
+                        <p><strong>🐍 Python Philosophy:</strong> "There should be one-- and preferably only one --obvious way to do it."</p>
+                        <p><strong>Remember:</strong> The best way to learn Python is to use it! Start building something amazing today!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                        <h2>📚 Recommended Resources:</h4>
+                        <div class="two-columns" style="font-size: 0.9em;">
+                            <div>
+                                <h3>📖 Books:</h3>
+                                <ul>
+                                    <li>Effective Python by Brett Slatkin</li>
+                                    <li>Fluent Python by Luciano Ramalho</li>
+                                    <li>Python Tricks by Dan Bader</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>🌍 Online:</h3>
+                                <ul>
+                                    <li>Real Python (realpython.com)</li>
+                                    <li>Python.org documentation</li>
+                                    <li>PEP 8 Style Guide</li>
+                                </ul>
+                            </div>
+                        </div>
+            </section>
+            </section>
+
+
+            <section>
+            <section>
+                <h2>🎪 Python Fun Facts & Trivia</h2>
+                <div class="content-container">
+                    <!-- Main Fun Fact -->
+                    <div style="text-align: center; margin-bottom: 2em;">
+                        <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid var(--warning-color); border-radius: 20px; padding: 2em; max-width: 600px; margin: 0 auto; box-shadow: 0 8px 32px -8px rgba(245, 158, 11, 0.3);">
+                            <div style="font-size: 4em; margin-bottom: 0.5em;">🐍🎭</div>
+                            <h3 style="color: var(--warning-color); margin-bottom: 0.8em; font-size: 1.3em;">The Name Game</h3>
+                            <p style="font-size: 1.1em; font-weight: 600; margin-bottom: 0.5em; color: var(--text-dark);">
+                                Python is named after <strong>"Monty Python's Flying Circus"</strong><br>
+                                NOT the snake! 🐍❌
+                            </p>
+                            <p style="font-size: 0.9em; color: var(--text-medium); font-style: italic;">
+                                Guido van Rossum was reading scripts from the British comedy show and wanted a name that was "short, unique, and slightly mysterious"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>🎪 Python Fun Facts & Trivia</h2>
+                <div class="content-container">
+                                   <!-- Additional Fun Facts Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5em; margin-top: 2em;">
+                        <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-left: 4px solid var(--primary-color); padding: 1.2em; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <div style="font-size: 2em; margin-bottom: 0.3em;">🎨</div>
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5em; font-size: 0.95em;">Logo Design</h4>
+                            <p style="font-size: 0.8em; color: var(--text-medium); margin: 0;">
+                                The Python logo features two intertwined snakes, but this came later! The original logo was much simpler.
+                            </p>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #ecfdf5 0%, #dcfce7 100%); border-left: 4px solid var(--secondary-color); padding: 1.2em; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <div style="font-size: 2em; margin-bottom: 0.3em;">📚</div>
+                            <h4 style="color: var(--secondary-color); margin-bottom: 0.5em; font-size: 0.95em;">Python Philosophy</h4>
+                            <p style="font-size: 0.8em; color: var(--text-medium); margin: 0;">
+                                "Life's too short to write bad code" - Python emphasizes readability and simplicity over complexity.
+                            </p>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%); border-left: 4px solid #8b5cf6; padding: 1.2em; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <div style="font-size: 2em; margin-bottom: 0.3em;">🎬</div>
+                            <h4 style="color: #8b5cf6; margin-bottom: 0.5em; font-size: 0.95em;">Monty Python References</h4>
+                            <p style="font-size: 0.8em; color: var(--text-medium); margin: 0;">
+                                Python documentation often uses "spam", "ham", and "eggs" as example variables - all Monty Python references!
+                            </p>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #fff7ed 0%, #fffbf0 100%); border-left: 4px solid #f97316; padding: 1.2em; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                            <div style="font-size: 2em; margin-bottom: 0.3em;">⚡</div>
+                            <h4 style="color: #f97316; margin-bottom: 0.5em; font-size: 0.95em;">Speed Surprise</h4>
+                            <p style="font-size: 0.8em; color: var(--text-medium); margin: 0;">
+                                Python is "slow" but powers Instagram, YouTube, and Netflix! It's not about raw speed, it's about development speed.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            plugins: [ RevealHighlight ],
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            keyboard: true,
+            overview: true
+        });
+    </script>
+</body>
+</html> 
